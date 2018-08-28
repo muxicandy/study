@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function c(data){
+			console.log(data);
+		}
+		let oscript = document.createElement('script');
+		oScript.src= 'http://localhost:3000/jsonp?cb=c';
+		document.body.appendChild(oScript);
+	</script>
+	<!--jsonp script没有跨域的问题 jsonp和ajax json 和jsonp没关系-->
+	<!-- <script src="http://localhost:3000/jsonp?cb=c"></script> -->
+</body>
+</html>

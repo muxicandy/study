@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+    <%include header.ejs%>
+	<h1><%=username%></h1>
+	<p><%=password%></p>
+	<%arr.forEach((item)=>{%>
+		<li><%=item+1%></li>
+	<%})%>
+	<%for(var i = 0; i< arr.length;i++){%>
+		<li><%=arr[i]%></li>
+	<%}%>
+	<%=html%>
+	<%-html%>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "use",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.npm.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "muxicandy51-project": "^1.0.0"
+  }
+}
