@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div id="app">
+	<!-- modifiers -->
+	<!-- 修饰符，在事件名后边添加 -->
+	<!-- 键盘修饰符名字.ctrl.enter -->
+	<input type="text" v-model="val" @keyup.enter="add">
+	<ul>
+		<li v-for="(item,index) in arr">{{item}}<button @click="remove(index)">删除</button></li>
+	</ul>
+</div>
+<script src="node_modules/vue/dist/vue.js" type="text/javascript"></script>
+<script>
+	let vm = new Vue({
+		el: '#app',
+		data: {
+			arr:[],
+			val:''
+		},
+		methods: {
+			add(){
+				this.arr.unshift(this.val);
+				this.val = '';
+			},
+			remove(i){
+				this.arr = this.arr.filter((item,index)=>index!== i);
+			}
+		}
+	});
+</script>
+</body>
+</html>

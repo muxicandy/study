@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div id="app">
+	{{a}}
+</div>
+<script src="node_modules/vue/dist/vue.js" type="text/javascript"></script>
+<script>
+	//vue会循环data中的数据（数据劫持）依次增加getter和setter
+	let vm = new Vue({//vm == viewModel
+		el: '#app',//告诉vue能管理哪个部分,querySelector
+		data: {//data中的数据会被vm所代理
+			a:[1,2,3,4,5]
+		}
+	});
+	//vue去改变数组中的某一项是监控不到的
+	//vm.a[0] = 100;
+	//也不能使用改变数组长度的方法
+	// vm.arr.length = 2;
+	// 变异方法：pop push shift unshift reserve sclice
+	// vm.a.reverse();
+	vm.a = vm.a.map(item=>item * 3);
+</script>
+</body>
+</html>

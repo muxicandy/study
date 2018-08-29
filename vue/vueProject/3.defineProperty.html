@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" id="input">
+<script>
+	let obj = {};
+	let temp = {};
+	Object.defineProperty(obj, 'name', {
+		get() {//取obj的值的时候会触发
+			return temp['name'];
+		},
+		set(val){//给obj赋值会触发set方法
+			temp['name'] = val;//改变temp的结果
+			input.value = val;//将值赋给我们的输入框
+		}
+	});
+	// id的dom元素不需要获取
+	input.value = obj.name;//页面一加载时，会调用get方法
+	input.addEventListener('input', function(){//等待输入框的变化。
+		obj.name = this.value;//当值变化时，会调用set方法
+	});
+</script>
+</body>
+</html>
