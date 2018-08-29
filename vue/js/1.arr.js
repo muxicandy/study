@@ -73,3 +73,10 @@ let sum2 = [{price:30,count:2},{price:30,count:3},{price:30,count:4}].reduce(fun
 	return prev + next.price * next.count;
 },0);//默认指定第一次的prev
 console.log(sum2);//NAN第一次没问题，返回结果是数字，第二次开始数字是没有price和count的
+
+let arr5 = [[1,2,3],[4,5,6],[7,8,9]].join(',');
+let arr6 = [[1,2,3],[4,5,6],[7,8,9]].reduce(function(prev,next){
+	return prev.concat(next);
+});
+console.log(arr5);
+console.log(arr6);
