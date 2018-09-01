@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.a {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			background: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<button v-color="flag">变色</button>
+		<div v-drag class="a">我可以拖拽</div>
+		<div v-drag class="a">我可以拖拽</div>
+	</div>
+<script src="node_modules/vue/dist/vue.js" type="text/javascript"></script>
+<script>
+	let vm = new Vue({
+			directives:{
+				color(el,bingings){//el指的是button按钮
+					console.log(arguments);
+					el.style.background = bingings.value;
+				},
+				drag(el){
+					el.onmousedown = function(e){
+						let disx = e.pageX - el.offsetLeft;
+						let disy = e.pageY - el.offsetTop;
+						document.onmousemove = function(e){
+							el.style.left = e.pageX - disx + 'px';
+							el.style.top = e.pageY - disy + 'px';
+						}
+						document.onmouseup = function() {
+							document.onmousemove = document.onmouseup = null;
+						}
+						e.preventDefault();
+					}
+				}
+			},
+			el:'#app',
+			data:{
+				flag: 'red'
+		}
+	});
+</script>
+</body>
+</html>

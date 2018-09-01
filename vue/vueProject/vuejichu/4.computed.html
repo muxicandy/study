@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div id="app1">
+	<input type="text" v-model="a">{{msg}}
+	<!-- 根据输入框中的内容 算出一个错误信息 -->
+</div>
+<script src="node_modules/vue/dist/vue.js" type="text/javascript"></script>
+<script>
+	let vm = new Vue({//vm == viewModel
+		el: '#app1',
+		data:{a:''},
+		computed:{//computed默认调用get方法，必须得有return，computed不支持异步	
+			msg(){
+				if(this.a.length<3){
+					return '少了';
+				}
+				if(this.a.length>6){
+					return '多了';
+				}
+				return '';
+			}
+		}
+	});
+</script>
+</body>
+</html>

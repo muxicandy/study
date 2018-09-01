@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div id="app1">
+	全选<input type="checkbox" v-model="checkAll"> <br>
+	<input type="checkbox" v-for="product in products" v-model="product.isSelected">
+</div>
+<script src="node_modules/vue/dist/vue.js" type="text/javascript"></script>
+<script>
+	let vm = new Vue({//vm == viewModel
+		el: '#app1',
+		computed:{
+			checkAll:{
+				get(){//返回什么结果，就会赋予給checkAll属性
+					return this.products.every(item=>item.isSelected);
+				},
+				set(val){
+					this.products.forEach(item=>item.isSelected = val);
+				}
+			}
+		},
+		data:{
+			products:[
+				{isSelected: true},
+				{isSelected: true}
+			]
+		}
+	});
+</script>
+</body>
+</html>

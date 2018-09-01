@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div id="app1">
+	{{'hello'|my}}
+</div>
+<div id="app2">{{'hello'|my}}</div>
+<script src="node_modules/vue/dist/vue.js" type="text/javascript"></script>
+<script>
+	//全局过滤器，要放在页面的顶部
+	Vue.filter('my',function(data){
+		return 'yang'+data;
+	});
+	let vm = new Vue({//vm == viewModel
+		el: '#app1'
+	});
+	let vm2 = new Vue({
+		el: '#app2'
+	});
+</script>
+</body>
+</html>

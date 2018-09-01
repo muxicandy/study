@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+	<div id="app">
+			<!-- bootstrap删格化布局 默认21列，常见的样式，基本样式+增强样式-->
+			<!-- default 灰色 success 绿色 danger 红色 warining 警告色 info 浅蓝色 primary 蓝色 -->
+		<div class="container">
+			<div class="row">
+				<table class="table table-hover table-bordered">
+					<caption class="h2 text-warning text-center">猪猪购物车</caption>
+					<tr>
+						<!-- click点击时，checkbox的状态还没有改变，所以拿到的总是相反的 -->
+						<th>全选<input type="checkbox" v-model="checkAll"></th>
+						<td>商品</td>
+						<td>单价</td>
+						<td>数量</td>
+						<td>小计</td>
+						<td>操作</td>
+					</tr>
+					<tr v-for="(product,index) in products">
+						<td>
+							<input type="checkbox"
+									v-model="product.isSelected">
+						</td>
+						<!-- v-bind和：等价，动态绑定数据 -->
+						<td><img :src="product.productCover" style="width:50px;height:50px" :title="product.productName"/>{{product.productInfo}}</td>
+						<td>{{product.productPrice}}</td>
+						<!-- .number是让数字变成数字类型.lazy当输入框失去焦点时更新数据 -->
+						<td>
+							<!-- 过滤器，在原数据不变的情况下，只是改变显示的效果，管道符 -->
+							<input type="number" v-model.number.lazy="product.productCount" min="1">
+						</td>
+						<td>{{product.productPrice * product.productCount | toFixed(2)}}</td>
+						<td><button class="btn btn-danger" @click="remove(product)">删除</button></td>
+					</tr>
+					<!-- 数据一变化就会重新计算此函数，不会缓存上一次的结果，computed可以解决这个问题 -->
+						<td colspan="6">总价格：{{sum|toFixed(2)}}</td>
+					</tr>
+				</table>	
+			</div>
+		</div>	
+	</div>
+	<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="node_modules/vue/dist/vue.js"></script>
+	<!-- 基于promise的 -->
+	<script src="node_modules/axios/dist/axios.js"></script>
+	<script>
+		let vm = new Vue({
+			el: '#app',
+			//当给全选赋值值，应邀影响其他人的变化，当页面刷新时，我们获取全选值，是根据下面的checkbox计算出来的结果给全选赋值
+			computed:{//放在computed中的最后也放在vm上，不能和data和methods里的方法重名
+				checkAll: {
+					//默认v-model会获取checkAll的值显示到页面上
+					//当products的值变化时，会重新计算
+					get(){
+						return this.checkAll = this.products.every(p=>p.isSelected);
+					},
+					set(val){//当我们给checkbox赋值的时候，把这个值给到下边的products
+						this.products.forEach(p=>p.isSelected = val);
+					}
+				},
+
+				sum(){//求和函数,sum的结果会被缓存，如果依赖的数据没有变化，就不会重新执行，如果计算属性写成函数，那默认调用的就是get方法
+					return this.products.reduce((prev,next)=>{
+						if (!next.isSelected) {
+ 							return prev;//如果当前没被选中就不加当前这一项
+						}
+						return prev+next.productPrice*next.productCount;
+					},0);
+				}
+			},
+			filters:{
+				//可以有好得多的自定义过滤器
+				toFixed(input,param1){
+					//这里的this指的是window
+					return '¥' + input.toFixed(param1)//input指的是前面的内容，toFixed指的是传入的方法，里边有穿的参数放到param1中
+				}
+			},
+			created(){//数据被初始化后会被调用，this对象指的也是vm实例,钩子函数
+				//专门用来发送ajax的方法
+				// axios.get('./carts.json').then(res=>{
+				// 	console.log(res);
+				// },function(err){
+				// 	console.log(err);
+				// });
+				// Promise 解决回调问题的
+			},
+			created(){
+				
+			},
+			data:{
+				products:[
+					{
+						"isSelected": true,
+						"productCover": "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2082094464,3115392881&fm=173&app=25&f=JPEG?w=218&h=146&s=1DCABC560D507CCC4471016A0300A07A",
+						"productName": "深福浅出node",
+						"productInfo": "颜色： node.js学习",
+						"productPrice": 58.9,
+						"productCount": 3
+					},
+					{
+						"isSelected": true,
+						"productCover": "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2082094464,3115392881&fm=173&app=25&f=JPEG?w=218&h=146&s=1DCABC560D507CCC4471016A0300A07A",
+						"productName": "深福浅出node",
+						"productInfo": "颜色： node.js学习",
+						"productPrice": 58.3,
+						"productCount": 3
+					}
+				]
+			},
+			methods:{
+				//p代表的是当前点击的这一项
+				remove(p){
+					this.products = this.products.filter(item=>item !== p);
+				}
+			}
+		});
+	</script>
+</body>
+</html>

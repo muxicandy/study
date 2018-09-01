@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="node_modules/animate.css/animate.css">
+	<style>
+		div>div{
+			width: 100px;
+			height: 100px;
+			background:red;
+		}
+		/*.lyy-enter {
+			opacity: 0;
+		}
+		.lyy-enter-active {
+			transition: 1s linear;
+		}
+		.lyy-leave-active {
+			opacity: 0;
+			transition:1s linear;
+		}*/
+	</style>
+</head>
+<body>
+	<div id="app">
+		<!-- v-if="" v-show="" if操作的是dom，show操作的是样式-->
+		<!-- 如果频繁的切换dom使用v-show -->
+		<!-- 当数据没有时，一开始就确定下来，使用v-if比较好 ，if不通过，内部指令都不会再执行了-->
+		<!-- 只有dom在隐藏显示，或者显示到隐藏，才能使用vue的变化 -->
+		<!-- vue自定义的标签（组件） -->
+	<button @click="flag = !flag">切换</button>
+	<!-- <transition enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown"> 
+		<div></div>里边只能有一个
+	</transition> -->
+	<input type="text" v-model="query">
+	<transition-group enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown"> 
+		<!-- v-for默认会服用原有dom,key如果加了，就认为是两个人了 -->
+		<div v-for="(a,index) in newArr" :key="Math.random()">{{a}}</div>
+	</transition-group>
+	</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+	let vm = new Vue({
+		el: '#app',
+		computed:{
+			newArr(){
+				return this.arr.filter(item=>item==this.query);
+			}
+		},
+		data:{
+			query: '',
+			flag: true,
+			arr: [1,2,3,4,5]
+		}
+	});
+</script>
+</body>
+</html>

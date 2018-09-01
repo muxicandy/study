@@ -42,7 +42,7 @@ npm init
 > 初始化会产生一个package.json的文件，藐视当前项目的依赖，名字不能有大写，特殊字符，中文，vue
 > npm init -y 保证文件夹的名字是正确的	
 
-## vue第一天复习
+## vue笔记1
 - vm=>viewModel 数据最终都会被vm代理
 - {{a}}取值表达式，通过{{}}来进行取值，默认可以不写this，表达式赋值运算 计算
 三元表达式尽量少写逻辑(computed)
@@ -54,4 +54,45 @@ npm init
 	- v-for循环（数组，对象，字符串，数字）
 
 ### 事件v-on(@)
-- 绑定给dom元素，函数需要定义在methods中，不能和data重名，this指向的是实例，不能使用箭头函数，事件源对象如果不写括号，可以自动传入，否则只能手动传入	
+- 绑定给dom元素，函数需要定义在methods中，不能和data重名，this指向的是实例，不能使用箭头函数，事件源对象如果不写括号，可以自动传入，否则只能手动传入
+
+## vue笔记2
+
+- v-model（如果checkbox,select多选是数组，提供一个value属性）(radio checkbox分组靠的是v-model),checked selected不存在
+- 修饰符，number.lazy
+- 按键修饰符 .enter.ctrl.keyCode
+- 事件.stop用法：@事件.stop='xxxx值' stopPropagation,cancelBabbel = true 
+preventDefault = false
+- @事件.capture = xxxx.addEventListener
+- Jquery中的Once
+- e.srcElement && e.target判断事件源绑定事件
+- @事件.once表示 on('click') off('click')
+
+## filters实例上可以用
+
+```
+{{'123'|my方法名(1,2,3)}}
+filters:{
+	my方法名(data,param1,param2,param3){
+
+	}
+}
+```
+## computed计算‘属性’不是方法
+- 方法不会缓存，computed会根据依赖（归vue管理的数据，可以响应式变化的）的属性进行缓存
+- 两部分组成，有get和set(不能只写set)，一般情况下，通过js赋值，影响其他人或者表单元素设置值的时候会调用set方法
+
+## v-if/v-show
+- v-if操作的是dom v-if可以和v-else-if，v-else连写
+- v-show操作的是样式	
+
+## v-bind简写：
+- 动态绑定"属性"
+```
+<img :src="src" />
+```
+##实现单页开发的方式
+- 通过hash记录跳转的路径(可以产生历史管理)	
+- 浏览器自带的历史管理的方法，history（history.pushState()）可能导致404
+
+> 开发时使用hash方式，上线的话，我们会使用history的方式

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div id="app1">
+	<!-- template标签， 是vue提供给我们的，没有任何意义，用来包裹元素的 v-show不支持template -->
+	<template v-if="flag">
+		yang
+	</template>
+	<div v-else>test</div>
+	<button @click="cut = !cut">点我啊</button>
+	<!-- 默认情况下切换dom时，相同的结构会被复用，如果不需要服用 需要加key	 -->
+	<template v-if="cut">
+		<label>注册</label>
+		<input type="text" key="1">
+	</template>
+	<template v-else>
+		<label>登陆</label>
+		<input type="text" key="2">
+	</template>
+</div>
+<script src="node_modules/vue/dist/vue.js" type="text/javascript"></script>
+<script>
+	let vm = new Vue({//vm == viewModel
+		el: '#app1',
+		data:{
+			cut:true,
+			flag:false
+		}
+	});
+</script>
+</body>
+</html>
