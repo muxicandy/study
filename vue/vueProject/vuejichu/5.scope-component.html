@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div id="app">
+	<handsome></handsome>
+	<handsome2></handsome2>
+</div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+	//局部组件，使用的三部曲，1、创建这个组件2、注册这个组件3、使用这个组件
+	//组件是相互独立的，不能直接跨作用域，实例也是一个组件
+	//组件中也有生命周期函数
+	//自组件不能直接使用父组件的数据（组件之间的数据交互）
+	//组件理论上可以无限嵌套
+	let handsome = {
+		template:'<div>我很英俊</div>',
+		data(){
+
+		}
+	};
+	let handsome2= {
+		template:'<div>我很英2</div>',
+		data(){
+
+		}
+	};
+	let vm = new Vue({
+		el:'#app',
+		components:{
+			handsome,
+			handsome2
+		},
+		data:{
+
+		}
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>Document</title>
+	<style>
+		.switch {
+			-webkit-appearance: none;
+			width: 50px;
+			height: 32px;
+			border: 1px solid #dfdfdf;
+			border-radius: 30px;
+			position: relative;
+			outline: none;
+			transition: all .2s linear;
+		}
+		.switch:checked {
+			box-shadow: #343cff 0 0 16px 16px inset;
+			transition: all .2s linear;
+		}
+		.switch:before {
+			content: '';
+			position: absolute;
+			width: 30px;
+			height: 30px;
+			left: 0;
+			top: 0;
+			border-radius: 50%;
+			box-shadow: 1px 1px 2px 0 #dfdfdf;
+			background-color: #ffffff;
+			transition:all .2s linear;
+		}
+		.switch:checked:before{
+			left: 20px;
+			transition:all .2s linear;
+		}
+	</style>
+</head>
+<body>
+	<div class="app">
+		
+	</div>
+	<script>
+		//1、我们将字符串进行封装，字符串不能绑定事件
+		//2、字符串变成dom
+		//3.提取公共的类
+		class component{
+			setState(newstate){
+				Object.assign(this.state,newstate);
+				let oldEle = this.el;
+				let newEle = this._render();
+				oldEle.parentNode.replaceChild(newEle,oldEle);
+			}
+			createDOMFromString(str){
+				let oDiv = document.createElement('div');
+				oDiv.innerHTML = str;
+				return oDiv.firstElementChild;
+			}
+			_render(){
+				this.el = this.createDOMFromString(this.render());
+				this.el.firstElementChild.addEventListener('change', this.change.bind(this),false);
+				return this.el;
+			}
+			mount(container){//用来将元素添加到页面上
+				container.appendChild(this._render());
+			}
+		}
+		class Switch extends component{
+			constructor(){
+				super()
+				this.state = {turn: false}
+			}
+			change(){
+				setTimeout(()=>{
+					this.setState({turn: !this.state.turn});
+				},300);
+			}
+			render(){
+				return `<div>
+						<input type="checkbox" class="switch" ${this.state.turn?'checked':''}>
+						<p class="text">${this.state.turn?'开':'关'}</p>
+					</div>`;
+			}
+		}
+		let app = document.querySelector('.app');
+		let render = (ele,container)=>{
+			ele.mount(container);
+		}
+		render(new Switch(),app);
+	</script>
+</body>
+</html>

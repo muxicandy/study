@@ -3,6 +3,31 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<style>
+		.right{
+			width: 500px;
+			height: 500px;
+			position: relative;
+			background: red;
+		}
+		.main{
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			border-radius: 15px;
+			background: yellow;
+		}
+		.rel {
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			border-radius: 15px;
+			background: green;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	</style>
 </head>
 <body>
 <div id="app">
@@ -11,9 +36,29 @@
 	{{msg}}
 	{{msg === 'hello'?1:0}}
 </div>
+<div class="right">
+	<div class="main" id="div">
+	</div>
+	<div class="rel"></div>
+</div>
 <script src="node_modules/vue/dist/vue.js" type="text/javascript"></script>
 <script>
-	//引入vue后会白给你一个构造函数
+	let oDiv = document.getElementById('div');
+	let R = 50;
+	var speed = 0.005;
+	let i = 0;
+	let round = function() {
+		oDiv.style.left = Math.sin(i*speed)*R + 250 + 'px';
+		oDiv.style.top = -Math.cos(i*speed)*R + 250 + 'px';
+		if (i*speed == 360) {
+			i = 0;
+		}
+		i+=2;
+	}
+
+	setInterval(function(){
+		round();
+	},10);
 	let vm = new Vue({//vm == viewModel
 		el: '#app',//告诉vue能管理哪个部分,querySelector
 		data: {//data中的数据会被vm所代理

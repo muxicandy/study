@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		父亲:{{money}}
+		<!-- 当前组件的属性=等于父级的值,给儿子加了一个m属性，属性对应的数据是属于父亲的 -->
+		<child :m="money"></child>
+	</div>
+	<script src='node_modules/vue/dist/vue.js'></script>
+	<script>
+		//父传递子
+		let vm = new Vue({//parent组件
+			el:'#app',
+			data: {
+				money: 100
+			},
+			components:{
+				child:{
+					props:{
+						m:{//娇艳数据类型，不加：得到的肯定是字符串
+							type: [String,Boolean,Function,Object,Array,Number],
+							default: 0,//可以给m赋于默认值，如果不传默认会调用default
+							required: true,//此属性是必须传递，但是不能和default通用
+							validator(val){//第一个参数当前传递的值，返回true表示通过，false表示不通过
+								return val > 300;
+							}
+						}
+					},//对象的形式可以校验
+					//props:['m','a'],//this.m=100,会在当前自组件上声明一个子属性，值是父亲的
+					template:'<div>儿子{{m}}</div>'
+				}
+			}
+		});
+	</script>
+</body>
+</html>

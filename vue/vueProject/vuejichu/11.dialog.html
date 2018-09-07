@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.mask {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0;
+			left: 0;
+			background:rgba(0,0,0,.3);
+		}
+		.dialog {
+			width: 400px;
+			height: 150px;
+			background: #fff;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate3d(-50%,-50%,0);
+		}
+	</style>
+</head>
+<body>
+<div id="app">
+	<button @click="flag = true">弹框</button>
+	<!-- @close对应的函数，是点击关闭按钮时触发的函数 -->
+	<modal :show="flag" @close="()=>flag=false"></modal>
+	<!--  -->
+</div>
+<template id="dialog">
+	<div class="mask" v-show="show">
+		<div class="dialog">
+			<button @click="shutdown">关闭</button>
+		</div>
+	</div>
+</template>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script>
+	let modal = {
+		template: '#dialog',
+		props: ['show'],//接受了父组件的属性,
+		methods:{
+			shutdown(){
+				this.$emit('close');
+			}
+		}
+	};
+	new Vue({
+		el: '#app',
+		data: {
+			flag: false
+		},
+		components:{
+			modal
+		}
+	});
+</script>
+</body>
+</html>

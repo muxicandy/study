@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.active {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<!-- hash模式#开发时使用hash,不会导致404问题，hash#不支持seo， h5的history.pushState（上线时采h5的跳转） -->
+	<div id="app">
+		<!-- router-view是一个全局组件 -->
+		<!-- <a href="#/home">首页</a>
+		<a href="#/list">列表页</a> -->
+		<router-link to="/home" tag="button">首页</router-link>
+		<router-link to="/list" tag="button">列表页</router-link>
+		<router-view></router-view>
+	</div>
+	<script src="node_modules/vue/dist/vue.js"></script>
+	<!-- 必须放在vue的后面 -->
+	<script src="node_modules/vue-router/dist/vue-router.js"></script>
+	<script>
+		let home = {
+			template:'<div>首页</div>'
+		};
+		let list = {
+			template:'<div>列表页</div>'
+		};
+		let routes = [//路由的映射表 配置路径和组件的关系
+			{path:'/home',component:home},//配置的关系就是页面级组件
+			{path:'/list',component:list}
+		];
+		let router = new VueRouter({//引入vue-router自带VueRouter类
+			//routes: routes//routes代表的就是路由表
+			// mode: 'history',//h5模式
+			routes,
+			linkActiveClass:'active'//更改默认样式的类名，默认叫router-link-active
+		});
+		let vm = new Vue({
+			el: '#app',
+			//router: router
+			router
+		});
+	</script>
+</body>
+</html>

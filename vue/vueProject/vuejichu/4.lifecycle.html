@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div id="app">
+	<child ref="child"></child>
+</div>
+<template id="child">
+	<ul>
+		<li v-for="a in arr">{{a}}</li>
+	</ul>
+</template>
+<!-- 需要等待自组件挂载完成后再触发父组件的挂载 -->
+<script src="node_modules/vue/dist/vue.js" type="text/javascript"></script>
+<script>
+	let vm = new Vue({
+		el: '#app',
+		mounted(){
+			this.$nextTick(()=>{//想操作dom就加一个nextTick
+				console.log(this.$refs.child.$el.innerHTML);
+			});
+		},
+		components:{
+			child:{
+				template: '#child',
+				data(){
+					return {arr:[1,2,3]}
+				},
+				mounted(){
+					this.arr = [4,5,6];//此处是异步渲染dom
+				}
+			}
+		},
+		data: {
+			
+		},
+		methods: {
+			
+		}
+	});
+</script>
+</body>
+</html>

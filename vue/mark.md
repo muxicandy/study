@@ -96,3 +96,9 @@ filters:{
 - 浏览器自带的历史管理的方法，history（history.pushState()）可能导致404
 
 > 开发时使用hash方式，上线的话，我们会使用history的方式
+
+## 路由
+- 访问不同的路径，就可以返回不同的结果
+
+## 多页面（vue的路由，主要是做spa的single page application单页应用），切换的是我们的组件
+

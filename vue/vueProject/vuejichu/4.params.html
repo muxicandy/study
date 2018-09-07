@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.active {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<!-- <router-link to="/article/1">商品1</router-link>
+		<router-link to="/article/2">商品2</router-link>
+		<router-link to="/article/3">商品3</router-link> -->
+		<!-- 如果用对象作为to的属性，并且使用了参数，必须给路由起名，通过名字跳转 -->
+		<router-link :to="{name:'pro',params:{c:1,a:2}}">商品1</router-link>
+		<router-link to="/article/2/b">商品2</router-link>
+		<router-link to="/article/3/cd">商品3</router-link>
+		<router-view></router-view>
+	</div>
+	<script src="node_modules/vue/dist/vue.js"></script>
+	<!-- 必须放在vue的后面 -->
+	<script src="node_modules/vue-router/dist/vue-router.js"></script>
+	<script>
+		// #article/2
+		let article = {
+			template: '<div>第{{$route.params.c}}篇文章</div>',
+			watch:{//路径参数发生变化，通过监控参数的变化发送ajax
+				$route(){
+					alert('发ajax');
+				}
+			}
+		};
+		// /article/1/a
+		// /article/:c/:a=>{c:1,a:a}=>this.$route.params
+		let routes = [//路径参数，表示值必须要有，但是值是随机的
+			{path: '/article/:c/:a',component: article,name:'pro'}
+		];
+		let router = new VueRouter({
+			routes
+		});
+		let vm = new Vue({
+			el: '#app',
+			router
+		});
+	</script>
+</body>
+</html>
