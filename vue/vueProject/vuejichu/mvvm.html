@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="message">{{message}}
+</div>
+<!--<script src="node_modules/vue/dist/vue.js" type="text/javascript"></script>-->
+<script>
+    //我们的数据一般都挂在在vm上
+//    Object.defineProperty get和set
+    //vue中实现双向绑定1、模版的编译2、数据劫持 观察数据变化 3、Watcher
+    let vm = new Vue({
+        el: '#app',
+        data:{
+            message: 'hello'
+        }
+    });
+</script>
+</body>
+</html>

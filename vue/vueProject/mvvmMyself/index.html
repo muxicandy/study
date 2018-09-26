@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{a}}<br/>
+        <input type="text" v-model="message.a">
+        <div>{{message.a}}</div>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+        {{message.a}}
+    </div>
+     <script src="./watcher.js"></script>
+    <script src="./observe.js"></script>
+    <script src="./compile.js"></script>
+    <script src="mvvm.js"></script>
+    <!-- 编译模版 2.数据劫持观察数据变化 object.defineProperty get和set， -->
+    <!--<script src="node_modules/vue/dist/vue.js" type="text/javascript"></script>-->
+    <script>
+        //我们的数据一般都挂在在vm上
+        //    Object.defineProperty get和set
+        //vue中实现双向绑定1、模版的编译2、数据劫持 观察数据变化 3、Watcher
+        let vm = new MVVM({
+            el: '#app',
+            data:{
+                message: {
+                    a: 'hello'
+                },
+                a: '21344'
+            }
+        });
+    </script>
+</body>
+</html>

@@ -11,7 +11,7 @@
 let a = b => {
 	return a + b;
 }
-let c = functionfunction a(b){
+let c = function a(b){
 	return function(c){
 		return b+c;
 	}
